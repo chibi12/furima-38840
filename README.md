@@ -1,24 +1,52 @@
-# README
+# DB設計
+## usersテーブル
+| Column             | Type   | Options            |
+| ------------------ | ------ | ------------------ |
+| email              | string | null: false        |
+| nicname            | string | null: false        |
+| encrypted_password | string | null: false        |
+| name               | string | null: false        |
+| birthday           | string | null: false        |
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+### Association
+has_many :purchases
+belongs_to :items
 
-Things you may want to cover:
+## itemsテーブル
+| Column             | Type       | Options                       |
+| ------------------ | ------     | ----------------------------- |
+| item               | string     | null: false                   |
+| category           | string     | null: false                   |
+| price              | string     | null: false                   |
+| item_state         | string     | null: false                   |
+| delivery_change    | string     | null: false                   |
+| shipping_place     | string     | null: false                   |
+| comment            | text       | null: false                   |
+| shipping_area      | string     | null: false                   |
+| user               | references | null: false, foreign_key: true|
 
-* Ruby version
+### Association
+belongs_to :user
+has_one :purchases
 
-* System dependencies
+## purchaseテーブル
+| Column             | Type   | Options                           |
+| ------------------ | ------ | --------------------------------- |
+| user               | references | null: false,foreign_key: ture |
+| item               | string     | null: false                   |
+| content            | text       | null: false                   |
 
-* Configuration
+### Association
+belongs_to :users
+has_one :items
+belomgd_to :shipping
 
-* Database creation
+## shippingテーブル
+| Column   | Type   | Options                       |
+| -------- | ------ | ----------------------------- |
+| address  | string | null: false                   |
+| user     | string | null: false,foreign_key: ture |
 
-* Database initialization
 
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+### Association
+has_one :purchases
