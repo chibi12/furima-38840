@@ -3,10 +3,12 @@
 | Column             | Type   | Options                  |
 | ------------------ | ------ | ------------------------ |
 | email              | string | null: false,unique: true |
-| nicname            | string | null: false              |
+| nickname           | string | null: false              |
 | encrypted_password | string | null: false              |
-| identification     | stripe | null: false              |
-| name               | string | null: false              |
+| first_name         | string | null: false              |
+| last_name          | string | null: false              |
+| first_name_kana    | string | null: false              |
+| last_name_kana     | string | null: false              |
 | birthday           | date   | null: false              |
 
 ### Association
@@ -23,36 +25,34 @@ has_many :items
 | delivery_change_id | integer    | null: false                   |
 | shipping_place_id  | integer    | null: false                   |
 | comment            | text       | null: false                   |
-| shipping_area_id   | string     | null: false                   |
+| shipping_area_id   | integer    | null: false                   |
 | user               | references | null: false, foreign_key: true|
 
 ### Association
 belongs_to :user
-has_one :purchases 
+belings_to :purchase 
 
-## purchaseテーブル
-| Column             | Type   | Options                           |
-| ------------------ | ------ | --------------------------------- |
+## purchasesテーブル
+| Column             | Type       | Options                       |
+| ------------------ | ---------- | ----------------------------- |
 | user               | references | null: false,foreign_key: ture |
-| item               | string     | null: false                   |
+| item               | references | null: false,foreign_key: true |
 
 ### Association
 belongs_to :user
-belongs_to :items
-belomgd_to :shipping
+has_many :items
+has_one :shipping
 
-## shippingテーブル
-| Column          | Type    | Options     |
-| --------------- | ------- | ------------|
-| card_number     | integer | null: false |
-| date_of_expiry  | date    | null: false |
-| security_code   | integer | null: false |
-| post_number     | integer | null: false |
-| prefectures_id  | integer | null: false |
-| municipalities  | string  | null: false |
-| address         | string  | null: false |
-| building_name   | string  | null: false |
-| phone_number    | integer | null: false |
+## shippingsテーブル
+| Column          | Type       | Options                       |
+| --------------- | ---------- | ------------------------------|
+| post_number     | string     | null: false                   |
+| prefecture_id   | integer    | null: false                   |
+| municipalities  | string     | null: false                   |
+| address         | string     | null: false                   |
+| building_name   | string     |                               |
+| phone_number    | string     | null: false                   |
+| purchase        | references | null: false,foreign_key: true |
 
 ### Association
-has_one :purchases
+belongs_to :purchase
