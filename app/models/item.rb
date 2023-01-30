@@ -10,15 +10,17 @@ class Item < ApplicationRecord
     belongs_to :sender
     belongs_to :days_to_ship
 
-    validates :name, :price, presence: true
-    with_options numericality: { other_than: 1, message: "can't be blank"}do
-    validates :category_id
-    validates :item_status_id
-    validates :delivery_change_id
-    validates :sender_id
-    validates :days_to_ship_id
-    end
-    validates :comment, presence: true, unless: :was_attached?
+    validates :name,  presence: true
+    validates :price, presence: true
+    validates_inclusion_of :price, in:300..9999999
+    validates :category_id, presence: true
+    validates :item_status_id, presence: true
+    validates :delivery_change_id, presence: true
+    validates :sender_id, presence: true
+    validates :days_to_ship_id, presence: true
+    
+    validates :comment, presence: true
+    validates :image, presence: true
 
     def was_attached?
       self.image.attached?
