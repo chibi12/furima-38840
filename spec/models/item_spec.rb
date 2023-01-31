@@ -70,8 +70,8 @@ RSpec.describe Item, type: :model do
       end
       it '商品画像が空では出品できない' do
        @item.image = nil
-       @item.image.valid?
-       expect(@item.errors.full_messages).to include("image can't be blank")
+       @item.valid?
+       expect(@item.errors.full_messages).to include("Image can't be blank")
       end
       it 'userが紐づいていなければ出品できない' do
        @item.user = nil
