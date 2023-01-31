@@ -38,30 +38,45 @@ describe '商品の出品登録' do
       @item.valid?
       expect(@item.errors.full_messages).to include('Price is not included in the list')
     end
+    it 'priceに半角数字以外が含まれている場合は出品できない'
+    @item.price = 'ああああああ'
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Price can include half-width alphanumeric")
+    end
     it 'sender_idが未選択では出品できない' do
-      @item.sender_id = nil
+      @item.sender_id = '1'
       @item.valid?
       expect(@item.errors.full_messages).to include("Sender can't be blank")
     end
     it 'category_idが未選択では出品できない' do
-      @item.category_id = nil
+      @item.category_id = '1'
       @item.valid?
       expect(@item.errors.full_messages).to include("Category can't be blank")
     end
     it 'item_status_idが未選択では出品できない' do
-      @item.item_status_id = nil
+      @item.item_status_id = '1'
       @item.valid?
       expect(@item.errors.full_messages).to include("Item status can't be blank")
     end
     it 'days_to_ship_idが未選択では出品できない' do
-      @item.days_to_ship_id = nil
+      @item.days_to_ship_id = '1'
       @item.valid?
       expect(@item.errors.full_messages).to include("Days to ship can't be blank")
     end
     it 'delivery_change_idが未選択では出品できない' do
-      @item.delivery_change_id = nil
+      @item.delivery_change_id = '1'
       @item.valid?
       expect(@item.errors.full_messages).to include("Delivery change can't be blank")
+    end
+    it '商品画像が空では出品できない'
+    @item.images = ''
+      @item.valid?
+      expect(@item.errors.full_messages).to include("Delivery change can't be blank")
+    end
+    it 'userが紐づいていなければ出品できない'
+    @item.user = nil
+      @item.valid?
+      expect(@item.errors.full_messages).to include("User must exist")
     end
   end
 end
