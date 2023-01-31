@@ -1,11 +1,27 @@
 class ItemsController < ApplicationController
-    def index
-        
+  before_action :authenticate_user!, only: [:new, :create]
+
+  def index
+    @items = Item.order("created_at DESC")
+  end
+
+  def new
+    @item = Item.new
+  end
+
+  def create
+    @item = Item.new(item_params)
+    if @item.save
+      redirect_to root_path
+    else
+      render :new
     end
+  end
 
-    def new
-        #@item = Item. new
-    end
+  private
 
-
+  def item_params
+    params.require(:item).permit(:name, :price, :comment, :category_id, :item_status_id, 
+      :delivery_change_id, :days_to_ship_id, :sender_id, :image).merge(user_id: current_user.id)
+  end
 end
