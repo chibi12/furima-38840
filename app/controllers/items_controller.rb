@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :contributor_confirmation, only: [:edit, :update, :destroy]
+  before_action :item_purchase ,only: :edit
 
   def index
     @items = Item.order(id: :DESC)
@@ -43,6 +44,13 @@ class ItemsController < ApplicationController
       redirect_to root_path
     end
   end
+
+  # def  item_purchase
+  #   @item = Item.find(params[:id])
+  #    if @item.purchase
+  #     redirect_to root_path
+  #    end
+  # end
 
   private
 
