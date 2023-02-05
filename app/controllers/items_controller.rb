@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :contributor_confirmation, only: [:edit, :update, :destroy]
-  before_action :item_purchase ,only: :edit
+  # before_action :item_order ,only: :edit
 
   def index
     @items = Item.order(id: :DESC)
