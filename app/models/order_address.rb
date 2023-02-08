@@ -1,6 +1,6 @@
 class OrderAddress
   include ActiveModel::Model
-  attr_accessor :post_number, :sender_id, :city, :addresses, :building, :phone_number, :user_id, :item_id
+  attr_accessor :post_number, :sender_id, :city, :addresses, :building, :phone_number, :token, :user_id, :item_id
 
   with_options presence: true do
     validates :user_id, :item_id
@@ -9,6 +9,7 @@ class OrderAddress
     validates :phone_number, format: {with: /\A\d{10,11}\z/, message: "is invalid"}
     end
     validates :city, :addresses, presence: true
+    validates :token, presence: true
 
     def save
         # addressesを保存し、変数orderに代入する
