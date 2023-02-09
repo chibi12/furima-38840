@@ -1,5 +1,6 @@
 class OrdersController < ApplicationController
      before_action :authenticate_user!, except: :index
+     before_action :contributor_confirmation
 
     def index
       @item = Item.find(params[:item_id])
@@ -38,5 +39,8 @@ class OrdersController < ApplicationController
       card: order_params[:token],    
       currency: 'jpy'                 
     )
+  end
+  def contributor_confirmation
+    redirect_to root_path unless current_user == @item.user 
   end
  end
