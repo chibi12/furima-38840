@@ -2,6 +2,7 @@ class ItemsController < ApplicationController
   before_action :authenticate_user!, only: [:new, :create, :edit, :destroy]
   before_action :set_item, only: [:show, :edit, :update, :destroy]
   before_action :contributor_confirmation, only: [:edit, :update, :destroy]
+  before_action :item_order ,only: :edit
 
   def index
     @items = Item.order(id: :DESC)
@@ -21,11 +22,13 @@ class ItemsController < ApplicationController
   end
 
   def show
-   
+    
   end
 
   def edit
-    
+    if @item.order.present?
+      redirect_to root_path
+    end
   end
 
   def update
@@ -44,6 +47,13 @@ class ItemsController < ApplicationController
     end
   end
 
+  def  item_order
+      @item = Item.find(params[:id])
+      if @item.order
+      redirect_to root_path
+      end
+  end
+
   private
 
   def item_params
@@ -56,6 +66,6 @@ class ItemsController < ApplicationController
   end
 
   def contributor_confirmation
-    redirect_to root_path unless current_user == @item.user
+    redirect_to root_path unless current_user == @item.user 
   end
 end
