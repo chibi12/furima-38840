@@ -3,13 +3,11 @@ class OrderAddress
   attr_accessor :post_number, :sender_id, :city, :addresses, :building, :phone_number, :token, :user_id, :item_id
 
   with_options presence: true do
-    validates :user_id, :item_id
+    validates :user_id, :item_id, :city, :addresses, :token
     validates :post_number, format: {with: /\A[0-9]{3}-[0-9]{4}\z/, message: "is invalid. Include hyphen(-)"}
     validates :sender_id, numericality: {other_than: 1, message: "can't be blank"}
     validates :phone_number, format: {with: /\A\d{10,11}\z/, message: "is invalid"}
     end
-    validates :city, :addresses, presence: true
-    validates :token, presence: true
 
     def save
         # addressesを保存し、変数orderに代入する
